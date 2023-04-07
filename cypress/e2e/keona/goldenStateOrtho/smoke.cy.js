@@ -22,14 +22,17 @@ describe('Golden State Ortho Tests', () => {
     // so we must tell it to visit our website with the `cy.visit()` command.
     // Since we want to visit the same URL at the start of all our tests,
     // we include it in our beforeEach function so that it runs before each test
-    cy.visit(locations[0].url);
+    cy.fixture('auth').then(function (data) {
+      this.data = data;
+    })
+    cy.visit(locations[0].url,{timeout:600000});
   });
   it(locations[0].client + ' ' + locations[0].area + ' triage test', () => {
     cy.get('#btnProviderLogin').click();
-    cy.get('#MainContent_liLogin_txtUserName').type('kagentsupport');
-    cy.get('#MainContent_liLogin_txtPassword').type('crusw!9HOfin');
+    cy.get('#MainContent_liLogin_txtUserName').type(this.data.agent-login);
+    cy.get('#MainContent_liLogin_txtPassword').type(this.data.agent-password);
     cy.get('#MainContent_liLogin_btnSignIn').click();
-    cy.contains('New Encounter').click();
+    cy.contains('New Encounter',{timeout:30000}).click();
     cy.get('[name=txtPatientSearchNameLast]').type('test');
     cy.get('[name=txtPatientSearchNameFirst]').type('jordan');
     cy.get('[name=btnSelectPatientSearch]').click();
@@ -50,11 +53,11 @@ describe('Golden State Ortho Tests', () => {
     cy.contains('Bone Health Clinic').click({
       force: true
     });
-    cy.get('[name=btnSubmitTicket]').first().click();
+    cy.get('[name=btnSubmitTicket]', { timeout: 30000 }).first().click();
     cy.get('#MainContent_MainContent_btnSaveWithoutNurseResponse', {
-      timeout: 10000
+      timeout: 30000
     }).click();
-    cy.get('#MainContent_MainContent_pnlProviderSelection > div').click();
+    cy.get('#MainContent_MainContent_pnlProviderSelection > div', {timeout:30000}).click();
     cy.contains('Contact Center').click({
       force: true
     });
@@ -64,8 +67,8 @@ describe('Golden State Ortho Tests', () => {
   
   it(locations[0].client + ' ' + locations[0].area + ' scheduling test', () => {
     cy.get('#btnProviderLogin').click()
-    cy.get('#MainContent_liLogin_txtUserName').type('kagentsupport')
-    cy.get('#MainContent_liLogin_txtPassword').type('crusw!9HOfin')
+    cy.get('#MainContent_liLogin_txtUserName').type(this.data.agent-login)
+    cy.get('#MainContent_liLogin_txtPassword').type(this.data.agent-password)
     cy.get('#MainContent_liLogin_btnSignIn').click()
     cy.contains('New Encounter').click()
     cy.get('[name=txtPatientSearchNameLast]').type('test')
@@ -79,45 +82,52 @@ describe('Golden State Ortho Tests', () => {
     cy.get('#react-select-3--value').scrollIntoView().click({force: true})
     cy.contains('Bone Health Clinic').click({force: true})
     cy.get('a').contains('Scheduling').first().click()
-    cy.get('#survey_answer_1990020').check()
-    cy.get('#survey_answer_1990023').check()
-    cy.get('#react-select-6--value').click()
-    cy.contains('Aetna').click()
-    cy.get('#survey_answer_1990064').check()
-    cy.get('#survey_answer_1991880').check()
-    cy.get('#survey_answer_1990077').check()
-    cy.get('#survey_answer_1990094').check()
-    cy.get('#survey_answer_1990148').check()
-    cy.get('#survey_answer_1990150').check()
+    cy.get('#survey_answer_1990020').scrollIntoView().check()
+    cy.get('#survey_answer_1990023').scrollIntoView().check()
+    cy.get('#react-select-6--value').scrollIntoView().click()
+    cy.contains('Aetna').scrollIntoView().click()
+    cy.get('#survey_answer_1990064').scrollIntoView().check()
+    cy.get('#survey_answer_1991880').scrollIntoView().check()
+    cy.get('#survey_answer_1990077').scrollIntoView().check()
+    cy.get('#survey_answer_1990094').scrollIntoView().check()
+    cy.get('#survey_answer_2039435').scrollIntoView().check()
+    cy.get('#survey_answer_1990148').scrollIntoView().check()
+    cy.get('#survey_answer_1990150').scrollIntoView().check()
     cy.get('#react-select-7--value').scrollIntoView().click({force: true})
-    cy.contains('Bilateral Ankle').click()
-    cy.contains('Schedule an Appointment').click()
-    cy.get('#react-select-14--value', { timeout: 30000 }).click()
-    cy.contains('Brentwood Clinic').click()
-    cy.get('#react-select-15--value').click()
-    cy.contains('Moorthy, Murali MD').click()
-    cy.get('div.col-sm-3.pad-left-5.marg-top-15.intelligent-scheduling-search-button > button').click()
-    cy.get('div.col-sm-3.pad-left-5.marg-top-15.intelligent-scheduling-search-button').click()
-    cy.get('.appointment-slot-list-card', { timeout: 30000 }).first().click()
-    cy.get('div.modal-body > div:nth-child(4) > div:nth-child(1) > div > div:nth-child(2) > input').type('Test')
-    cy.get('div.modal-body > div:nth-child(4) > div:nth-child(2) > div > div:nth-child(2) > input').type('Test')
-    cy.get('#react-select-11--value').click()
-    cy.contains('HMO Aetna').click()
+    cy.get('#react-select-7--option-2').click({force:true});
+    cy.contains('Schedule an Appointment').scrollIntoView().click()
+    cy.get('#react-select-14--value', { timeout: 30000 }).scrollIntoView().click()
+    cy.contains('Brentwood Clinic').scrollIntoView().click()
+    cy.get('#react-select-15--value').scrollIntoView().type('Moorthy')
+    cy.contains('Moorthy, Murali MD').scrollIntoView().click()
+    cy.get('div.col-sm-3.pad-left-5.marg-top-15.intelligent-scheduling-search-button > button').scrollIntoView().click()
+    cy.get('div.col-sm-3.pad-left-5.marg-top-15.intelligent-scheduling-search-button').scrollIntoView().click()
+    cy.get('.appointment-slot-list-card', { timeout: 30000 }).first().scrollIntoView().click()
+    cy.get('div.modal-body > div:nth-child(4) > div:nth-child(1) > div > div:nth-child(2) > input').scrollIntoView().type('Test')
+    cy.get('div.modal-body > div:nth-child(4) > div:nth-child(2) > div > div:nth-child(2) > input').scrollIntoView().type('Test')
+    cy.get('#react-select-11--value').scrollIntoView().click()
+    cy.contains('HMO Aetna').scrollIntoView().click()
     cy.get('#PMReferringProviderId').scrollIntoView().click({force: true})
-    cy.contains('Peter Abaci').click()
-    cy.contains('Create Appointment(s)').click()
-    cy.get('[name=btnSaveAndCloseTicketAfterScheduling]').click()
+    cy.contains('Peter Abaci').scrollIntoView().click()
+    cy.contains('Create Appointment(s)').scrollIntoView().click()
+    cy.get('[name=btnSaveAndCloseTicketAfterScheduling]',{timeout: 30000}).scrollIntoView().click()
     // Now reschedule
-    cy.contains('New Encounter').click()
-    cy.get('[name=txtPatientSearchNameLast]').type('test')
-    cy.get('[name=txtPatientSearchNameFirst]').type('jordan')
-    cy.get('[name=btnSelectPatientSearch]').click()
-    cy.contains('Jordan').click()
-    cy.contains('Continue').click()
-    cy.contains('Click here to continue with new encounter').click()
+    cy.visit(locations[0].url + '/Providers/EncounterStart.aspx',{timeout:600000});
+    cy.get('[name=txtPatientSearchNameLast]').scrollIntoView().type('test')
+    cy.get('[name=txtPatientSearchNameFirst]').scrollIntoView().type('jordan')
+    cy.get('[name=btnSelectPatientSearch]').scrollIntoView().click()
+    cy.contains('Jordan').scrollIntoView().click()
+    cy.contains('Continue').scrollIntoView().click()
+    cy.contains('Click here to continue with new encounter').scrollIntoView().click()
     cy.get('input').get('[aria-label=Provider]').scrollIntoView().click({force: true})
-    cy.contains('Brooke Aber').click({force: true})
+    cy.contains('Brooke Aber').scrollIntoView().click({force: true})
     cy.get('#react-select-3--value').scrollIntoView().click({force: true})
-    cy.contains('Bone Health Clinic').click({force: true})
+    cy.contains('Bone Health Clinic').scrollIntoView().click({force: true})
+    var cancelBtn = cy.contains('Cancel').scrollIntoView();
+    console.log(cancelBtn);
+    cancelBtn.click({force: true});
+    cy.get('.pad-top-20 > .form-group > .Select > .Select-control > #react-select-2--value > .Select-value').scrollIntoView().select("Cancel Patient");
+    cy.get('.col-md-48 > .form-control').scrollIntoView().type("Automated Test");
+    cy.get('.btn-primary').scrollIntoView().click({force: true});
   })
 });

@@ -10,7 +10,8 @@
 // what makes it such an awesome testing tool,
 // please read our getting started guide:
 // https://on.cypress.io/introduction-to-cypress
-
+import { slowCypressDown } from 'cypress-slow-down'
+slowCypressDown();
 var locations = [{
   client: 'Golden State Ortho',
   area: 'Preview',

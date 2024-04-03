@@ -61,7 +61,7 @@
   "devDependencies": {
     "@bahmutov/print-env": "1.2.0",
     "colon-names": "1.0.0",
-    "cypress": "12.14.0",
+    "cypress": "13.7.1",
     "cypress-slow-down": "1.2.1",
     "eslint": "7.0.0",
     "eslint-plugin-cypress": "2.8.1",

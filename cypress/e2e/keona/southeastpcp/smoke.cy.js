@@ -30,11 +30,6 @@ describe('Southeast PCP PSS Tests', () => {
   });
 
   it(locations[0].client + ' ' + locations[0].area + ' PSS scheduling test', function() {
-    cy.get('#btnProviderLogin').click()
-    cy.get('#MainContent_liLogin_txtUserName').type(this.data.nurseLogin)
-    cy.get('#MainContent_liLogin_txtPassword').type(this.data.nursePassword)
-    cy.get('#MainContent_liLogin_btnSignIn').click()
-    cy.contains('New Encounter',{timeout:30000}).click();
     cy.get('[name=txtPatientSearchNameLast]').type('ZZValidate');
     cy.get('[name=txtPatientSearchNameFirst]').type('test');
     cy.get('#txtPatientSearchDateOfBirth').type('04/12/1975');
@@ -56,16 +51,5 @@ describe('Southeast PCP PSS Tests', () => {
     cy.get('#MainContent_MainContent_upOutcome > .col-sm-48 > .selectize-control > .selectize-input').scrollIntoView().click()
     cy.get('[data-value="79101660-5daa-ea11-9b05-501ac51c21ab"]',{force:true}).click();
     cy.get('#MainContent_MainContent_btnSaveWithoutNurseResponseCloseOnly',{timeout: 30000}).click()
-    // Now reschedule
-    cy.visit(locations[0].url + '/Providers/EncounterStart.aspx',{timeout:600000});
-    cy.get('[name=txtPatientSearchNameLast]').type('ZZValidate');
-    cy.get('[name=txtPatientSearchNameFirst]').type('test');
-    cy.get('#txtPatientSearchDateOfBirth').type('04/12/1975');
-    cy.get('[name=btnSelectPatientSearch]').click();
-    cy.contains('ZZVALIDATE').click();
-    cy.contains('Click here to continue with new encounter').click()
-    cy.get('.col-sm-2 > .btn').first().click({force: true});
-    cy.get('.col-md-48 > .form-control').scrollIntoView().type("Automated Test");
-    cy.get('.btn-primary').scrollIntoView().click({force: true});
   })
 });

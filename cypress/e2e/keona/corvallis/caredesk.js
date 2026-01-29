@@ -13,11 +13,11 @@
 import { slowCypressDown } from 'cypress-slow-down'
 slowCypressDown();
 var locations = [{
-  client: 'Golden State Ortho',
+  client: 'Corvallis Clinic',
   area: 'Preview',
-  url: 'https://preview-goldenstateortho.keonahealth.com'
+  url: 'https://preview-corvallisclinic.keonahealth.com'
 }];
-describe('Golden State Ortho Tests', function() {
+describe('Corvallis Care Desk Tests', function() {
   beforeEach(() => {
     // Cypress starts out with a blank slate for each test
     // so we must tell it to visit our website with the `cy.visit()` command.
@@ -28,7 +28,7 @@ describe('Golden State Ortho Tests', function() {
     })
     cy.visit(locations[0].url,{timeout:600000});
   });
-  it(locations[0].client + ' ' + locations[0].area + ' triage test', function() {
+  it.only(locations[0].client + ' ' + locations[0].area + ' triage test', function() {
     cy.get('#btnProviderLogin').click();
     cy.get('#MainContent_liLogin_txtUserName').type(this.data.agentLogin);
     cy.get('#MainContent_liLogin_txtPassword').type(this.data.agentPassword);
@@ -66,7 +66,7 @@ describe('Golden State Ortho Tests', function() {
     cy.get('#MainContent_MainContent_btnCloseAndSaveToChart').click();
   });
   
-  it.only(locations[0].client + ' ' + locations[0].area + ' scheduling test', function() {
+  it(locations[0].client + ' ' + locations[0].area + ' scheduling test', function() {
     cy.get('#btnProviderLogin').click();
     cy.get('#MainContent_liLogin_txtUserName').type(this.data.agentLogin);
     cy.get('#MainContent_liLogin_txtPassword').type(this.data.agentPassword);

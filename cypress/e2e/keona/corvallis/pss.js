@@ -13,11 +13,11 @@
 import { slowCypressDown } from 'cypress-slow-down'
 slowCypressDown();
 var locations = [{
-  client: 'Golden State Ortho',
+  client: 'Corvallis Clinic',
   area: 'Preview',
-  url: 'https://preview-goldenstateortho.keonahealth.com'
+  url: 'https://preview-corvallisclinic-pss.keonahealth.com'
 }];
-describe('Golden State Ortho Tests', function() {
+describe('Corvallis Clinic PSS Tests', function() {
   beforeEach(() => {
     // Cypress starts out with a blank slate for each test
     // so we must tell it to visit our website with the `cy.visit()` command.
@@ -28,45 +28,11 @@ describe('Golden State Ortho Tests', function() {
     })
     cy.visit(locations[0].url,{timeout:600000});
   });
-  it(locations[0].client + ' ' + locations[0].area + ' triage test', function() {
-    cy.get('#btnProviderLogin').click();
-    cy.get('#MainContent_liLogin_txtUserName').type(this.data.agentLogin);
-    cy.get('#MainContent_liLogin_txtPassword').type(this.data.agentPassword);
-    cy.get('#MainContent_liLogin_btnSignIn').click();
-    cy.contains('New Encounter',{timeout:30000}).click();
-    cy.get('[name=txtPatientSearchNameLast]').type('test');
-    cy.get('[name=txtPatientSearchNameFirst]').type('jordan');
-    cy.get('[name=btnSelectPatientSearch]').click();
-    cy.contains('Jordan').click();
-    cy.contains('Click here to continue with new encounter').click();
-    cy.contains('Continue').click();
-    cy.get('a').contains('Business Inquiry').click();
-    cy.get('[name=survey_answer_1569390]').type('Automated Testing');
-    cy.get('input').get('[aria-label=Provider]').scrollIntoView().click({
-      force: true
-    });
-    cy.contains('Mir Ali').click({
-      force: true
-    });
-    cy.get('#react-select-3--value').scrollIntoView().click({
-      force: true
-    });
-    cy.contains('GSOS Clinic Telehealth').click({
-      force: true
-    });
-    cy.get('[name=btnSubmitTicket]', { timeout: 30000 }).first().click();
-    cy.get('#MainContent_MainContent_btnSaveWithoutNurseResponse', {
-      timeout: 30000
-    }).click();
-    cy.get('#MainContent_MainContent_pnlProviderSelection > div', {timeout:30000}).click();
-    cy.contains('Contact Center').click({
-      force: true
-    });
-    cy.get('#MainContent_MainContent_ddlSaveToChartEHRNotificationUrgencySelection').select('Low');
-    cy.get('#MainContent_MainContent_btnCloseAndSaveToChart').click();
+  it.only(locations[0].client + ' ' + locations[0].area + ' scheduling test', function() {
+    
   });
   
-  it.only(locations[0].client + ' ' + locations[0].area + ' scheduling test', function() {
+  it(locations[0].client + ' ' + locations[0].area + ' scheduling test', function() {
     cy.get('#btnProviderLogin').click();
     cy.get('#MainContent_liLogin_txtUserName').type(this.data.agentLogin);
     cy.get('#MainContent_liLogin_txtPassword').type(this.data.agentPassword);

@@ -66,7 +66,7 @@ describe('Golden State Ortho Tests', function() {
     cy.get('#MainContent_MainContent_btnCloseAndSaveToChart').click();
   });
   
-  it.only(locations[0].client + ' ' + locations[0].area + ' scheduling test', function() {
+  it(locations[0].client + ' ' + locations[0].area + ' scheduling test', function() {
     cy.get('#btnProviderLogin').click();
     cy.get('#MainContent_liLogin_txtUserName').type(this.data.agentLogin);
     cy.get('#MainContent_liLogin_txtPassword').type(this.data.agentPassword);

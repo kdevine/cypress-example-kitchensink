@@ -1,4 +1,6 @@
 const { defineConfig } = require('cypress')
+// Import the accessibility tasks from wick-a11y plugin
+const addAccessibilityTasks = require('wick-a11y/accessibility-tasks');
 
 module.exports = defineConfig({
   'projectId': '4b7344',
@@ -13,6 +15,10 @@ module.exports = defineConfig({
   },
   // Command timeout overridden for E2E tests
   e2e: {
+    setupNodeEvents(on, config) {
+      // Add accessibility tasks
+      addAccessibilityTasks(on);
+    },
     defaultCommandTimeout: 10000
   }
 })

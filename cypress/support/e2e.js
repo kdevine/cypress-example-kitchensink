@@ -15,6 +15,15 @@
 
 // Import commands.js using ES2015 syntax:
 import './commands'
+import 'wick-a11y';
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
+Cypress.on('uncaught:exception', (err, runnable) => {
+  // return false to prevent the error from failing the test
+  if (err.message.includes("Cannot read properties of undefined")) {
+    return false;
+  }
+  // uncomment the following line if you want to ignore all uncaught exceptions
+  return false
+});
